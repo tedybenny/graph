@@ -8,19 +8,17 @@
         
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <local:MainWindow/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid>
-            <oxy:Plot Title="{Binding Title}">
+            <oxy:Plot x:Name="oxy" Title="{Binding Title}">
                 <oxy:Plot.Series>
                     <oxy:LineSeries ItemsSource="{Binding Points}"/>
                 </oxy:Plot.Series>
+                
             </oxy:Plot>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Vertical" Width="100" Margin="0,0,0,0" HorizontalAlignment="Left">
@@ -31,5 +29,11 @@
             <TextBlock>Максимум X</TextBlock>
             <TextBox Text="{Binding Xmax}" ></TextBox>
         </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Vertical" Width="200" Margin="200,0,0,0" HorizontalAlignment="Left">
+            <TextBlock>Введите формулу</TextBlock>
+            <TextBox Text="{Binding userFormula}"></TextBox>
+        </StackPanel>
+
+        <Button x:Name="generate" Grid.Row="1" Width="100" Margin="400,0,0,0" HorizontalAlignment="Left" Height="20" Click="Generate_Click" >Generate</Button>
     </Grid> 
 </Window>

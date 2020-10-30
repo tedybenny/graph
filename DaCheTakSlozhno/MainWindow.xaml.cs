@@ -18,6 +18,7 @@ using System.ComponentModel;
 using OxyPlot;
 using OxyPlot.Series;
 using System.Data;
+using org.mariuszgromada.math.mxparser;
 
 namespace DaCheTakSlozhno
 {
@@ -26,35 +27,42 @@ namespace DaCheTakSlozhno
     /// </summary>
     public partial class MainWindow : Window
     {
-        Model XUY = new Model();
+        Model model = new Model();
         public string Xmin
         {
-            get => XUY.Xmin;
-            set => XUY.Xmin = value;
+            get => model.Xmin;
+            set => model.Xmin = value;
         }
         public string Xmax
         {
-            get => XUY.Xmax;
-            set => XUY.Xmax = value;
+            get => model.Xmax;
+            set => model.Xmax = value;
+        }
+        public string userFormula
+        {
+            get => model.userFormula;
+            set => model.userFormula = value;
         }
 
+        public List<DataPoint> Points { get; }
         public MainWindow()
         {
-            this.Title = "Example 2";
-            this.Points = new List<DataPoint>
-                              {
-                                  new DataPoint(0, 4),
-                                  new DataPoint(10, 13),
-                                  new DataPoint(20, 15),
-                                  new DataPoint(30, 16),
-                                  new DataPoint(40, 12),
-                                  new DataPoint(50, 12)
-                              };
+            
+            Points = new List<DataPoint>();
             DataContext = this;
         }
 
-
-        public IList<DataPoint> Points { get; private set; }
+        private void Generate_Click(object sender, RoutedEventArgs e)
+        {
+            Title = "Your graphic";
+            Points.Clear();
+            for (int i = Convert.ToInt32(Xmin);i<= Convert.ToInt32(Xmax);i++)
+            {
+                Points.Add(new DataPoint(i,model.PointY(i)));
+            }
+            oxy.InvalidatePlot(true);
+        }
+        
     }
     
 

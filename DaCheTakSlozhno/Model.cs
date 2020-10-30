@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DaCheTakSlozhno
 {
+
     class Model
     {
-        List <Point> points = new List<Point>();
+        MathEvaluator math = new MathEvaluator();
         public string Xmin
         {
             get;
@@ -18,6 +19,16 @@ namespace DaCheTakSlozhno
         {
             get;
             set;
+        }
+        public string userFormula
+        {
+            get;
+            set;
+        }
+        public double PointY(int a)
+        {
+            double result = math.Evaluate(userFormula,a);
+            return result;
         }
 
     }
