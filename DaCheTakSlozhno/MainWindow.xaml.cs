@@ -19,6 +19,7 @@ using OxyPlot;
 using OxyPlot.Series;
 using System.Data;
 using org.mariuszgromada.math.mxparser;
+using System.Windows.Threading;
 
 namespace DaCheTakSlozhno
 {
@@ -45,11 +46,16 @@ namespace DaCheTakSlozhno
         }
 
         public List<DataPoint> Points { get; }
+
+        int loadText = 0;
+        int count = 0;
+        DispatcherTimer timer = new DispatcherTimer();
         public MainWindow()
         {
             
             Points = new List<DataPoint>();
             DataContext = this;
+            Loading();
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)
@@ -62,6 +68,50 @@ namespace DaCheTakSlozhno
             }
             oxy.InvalidatePlot(true);
         }
+        private void timer_tick(object sender, EventArgs e)
+        {
+            count++;
+            if (count == 13)
+            {
+                timer.Stop();
+                loadUp.Visibility = Visibility.Hidden;
+                loadDown.Visibility = Visibility.Hidden;
+                oxy.Visibility = Visibility.Visible;
+            }
+
+            if (loadText == 0)
+            {
+
+                load.Text = "LOADING";
+            }
+            if (loadText == 1)
+            {
+                load.Text = "LOADING.";
+            }
+            if (loadText == 2)
+            {
+                load.Text = "LOADING..";
+            }
+            if (loadText == 3)
+            {
+                load.Text = "LOADING...";
+            }
+            if(loadText <=2)
+            {
+                loadText++;
+            }
+            else
+            {
+                loadText = 0;
+            }
+        }
+        void Loading()
+        {
+            timer.Tick += timer_tick;
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Start();
+        }
+
         
     }
     

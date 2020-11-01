@@ -9,12 +9,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
+
         <Grid>
-            <oxy:Plot x:Name="oxy" Title="{Binding Title}">
+            <oxy:Plot x:Name="oxy"  Title="{Binding Title}">
                 <oxy:Plot.Series>
                     <oxy:LineSeries ItemsSource="{Binding Points}"/>
                 </oxy:Plot.Series>
@@ -33,7 +35,33 @@
             <TextBlock>Введите формулу</TextBlock>
             <TextBox Text="{Binding userFormula}"></TextBox>
         </StackPanel>
+       
+
 
         <Button x:Name="generate" Grid.Row="1" Width="100" Margin="400,0,0,0" HorizontalAlignment="Left" Height="20" Click="Generate_Click" >Generate</Button>
+
+        <Grid x:Name="loadUp" Grid.Row="0" Background="White">
+            <Image Source="Resources/romaload.png" Width="250" x:Name="roma" RenderTransformOrigin="0.5, 0.5">
+                <Image.RenderTransform>
+                    <RotateTransform x:Name="MyAnimatedTransform" Angle="0" />
+                </Image.RenderTransform>
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Button.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                Storyboard.TargetName="MyAnimatedTransform"
+                Storyboard.TargetProperty="(RotateTransform.Angle)"
+                From="0.0" To="360" Duration="0:0:10" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+        </Grid>
+        <Grid x:Name="loadDown" Grid.Row="1" Background="White">
+            <TextBlock x:Name="load" HorizontalAlignment="Center" FontSize="60" VerticalAlignment="Bottom" Text="LOADING"></TextBlock>
+        </Grid>
     </Grid> 
+
 </Window>
